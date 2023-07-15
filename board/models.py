@@ -13,10 +13,6 @@ class MovieList(models.Model):
     release_date = models.CharField(null=True, max_length=100)
     rate = models.CharField(null=True, max_length=100)
     summary = models.TextField(default="")
-    # staffs = models.ForeignKey(Staff, null=True, on_delete=models.CASCADE)
-    # staff = models.ManyToManyField(Staff) 
-    # staff = models.ForeignKey(Staff, null=True, on_delete=models.CASCADE)
-    
 
     def __str__(self):
         return self.title_kor

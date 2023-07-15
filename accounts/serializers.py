@@ -4,7 +4,7 @@ from rest_framework import serializers
 from .models import CustomUser
 
 class CustomRegisterSerializer(RegisterSerializer):
-    nickname = serializers.CharField(max_length=100)
+    # nickname = serializers.CharField(max_length=100)
     
     def get_cleaned_data(self):
         super(CustomRegisterSerializer, self).get_cleaned_data()
@@ -13,7 +13,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             'email': self.validated_data.get('email', ''),
             'password1': self.validated_data.get('password1', ''),
             'password2': self.validated_data.get('password2', ''),
-            'nickname': self.validated_data.get('nickname', ''),
+            # 'nickname': self.validated_data.get('nickname', ''),
         }
     
     def save(self, request):
@@ -21,13 +21,15 @@ class CustomRegisterSerializer(RegisterSerializer):
         user = adapter.new_user(request)
         self.cleaned_data = self.get_cleaned_data()
         user.username = self.cleaned_data.get('username')
-        user.nickname = self.cleaned_data.get('nickname')
+        # user.nickname = self.cleaned_data.get('nickname')
         user.email = self.cleaned_data.get('email')
         user.save()
         adapter.save_user(request, user, self)
         return user
     
 class CustomUserDetailSerializer(serializers.ModelSerializer):
+    email = serializers.ReadOnlyField(source='user.email')
+
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'password', 'nickname']
+        fields = ['id', 'username', 'password', 'email']

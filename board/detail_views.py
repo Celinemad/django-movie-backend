@@ -1,5 +1,5 @@
 from .models import Staff, MovieList, Comment
-from .serializers import MovieDetailSerializer, CommentSerializer
+from .serializers import MovieDetailSerializer, StaffSerializer, CommentSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
@@ -73,3 +73,8 @@ class CommentDestroy(RetrieveUpdateDestroyAPIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_class = [IsOwnerOrReadOnly]
 
+# class StaffView(ListAPIView):
+#     queryset = Staff.objects.all()
+#     serializer_class = StaffSerializer
+#     authentication_classes = [BasicAuthentication, SessionAuthentication]
+#     permission_classes = [AllowAny]

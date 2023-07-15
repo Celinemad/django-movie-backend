@@ -3,10 +3,10 @@ from .models import *
 
 class StaffSerializer(serializers.ModelSerializer):
     # movie_id = serializers.ReadOnlyField(source="movie_id.title_kor")
-
+    
     class Meta:
         model = Staff
-        fields = ['id', 'name', 'role', 'image_url']
+        fields = ['id', 'movie_id', 'name', 'role', 'image_url']
 
 class MovieListSerializer(serializers.ModelSerializer):
     # staff = StaffSerializer(many=True)
@@ -14,6 +14,7 @@ class MovieListSerializer(serializers.ModelSerializer):
         model = MovieList
         fields = ['id', 'title_kor', 'title_eng', 'poster_url', 'rating_aud', 'rating_cri', 'rating_net', 'genre', 'showtimes', 'release_date', 'rate', 'summary']
 
+ 
 class CommentSerializer(serializers.ModelSerializer):
     userComment = serializers.CharField(source="comment")
     
