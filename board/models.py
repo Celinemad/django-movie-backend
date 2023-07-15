@@ -30,11 +30,12 @@ class MovieList(models.Model):
         return self.title_kor
     
 class Comment(models.Model):
+    user = models.ForeignKey(CustomUser, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    comment = models.TextField()
+    comment = models.TextField(default="")
 
-
-
+    def __str__(self):
+        return self.comment
 
 class MovieDetail(models.Model):
     # user = models.ForeignKey(CustomUser, null=True, on_delete=models.CASCADE)
@@ -50,6 +51,7 @@ class MovieDetail(models.Model):
     rate = models.CharField(null=True, max_length=100)
     summary = models.TextField(default="")
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    comments = models.ForeignKey(Comment, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title_kor

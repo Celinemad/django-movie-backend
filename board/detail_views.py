@@ -1,11 +1,12 @@
-from .models import MovieDetail, Staff, MovieList
-from .serializers import MovieDetailSerializer
+from .models import MovieDetail, Staff, MovieList, Comment
+from .serializers import MovieDetailSerializer, CommentSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView, ListAPIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from .permissions import IsOwnerOrReadOnly
 import requests
 
 @api_view(["GET"])
@@ -46,3 +47,14 @@ class MovieDetailView(RetrieveAPIView):
     permission_classes = [AllowAny]
     # lookup_url_kwarg = 'id'
 
+class CommentsList(ListAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class CommentDestroy(RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_class = [IsOwnerOrReadOnly]
