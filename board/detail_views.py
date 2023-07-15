@@ -32,8 +32,8 @@ def init_db(request):
         staffset = movie['staff']
         for staff in staffset:
             staff1 = Staff()
-            # staff1.movie = movie1
-            staff1.movie_id = movie1.id
+            staff1.movie = movie1
+            # staff1.movie_id = movie1.id
             staff1.name = staff['name']
             staff1.role = staff['role']
             staff1.image_url = staff['image_url']
