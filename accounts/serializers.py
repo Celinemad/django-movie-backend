@@ -28,6 +28,8 @@ class CustomRegisterSerializer(RegisterSerializer):
         return user
     
 class CustomUserDetailSerializer(serializers.ModelSerializer):
+    email = serializers.ReadOnlyField(source='user.email')
+
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'password', 'email']
