@@ -1,5 +1,5 @@
-from .models import MovieDetail, Staff, MovieList, Comment
-from .serializers import MovieDetailSerializer, CommentSerializer
+from .models import Staff, MovieList
+from .serializers import MovieDetailSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
@@ -20,6 +20,7 @@ def init_db(request):
         movie1.title_eng = movie['title_eng']
         movie1.poster_url = movie['poster_url']
         movie1.rating_aud = movie['rating_aud']
+        movie1.rating_cri = movie['rating_cri']
         movie1.rating_net = movie['rating_net']
         movie1.genre = movie['genre']
         movie1.showtimes = movie['showtimes']
@@ -58,3 +59,4 @@ class CommentDestroy(RetrieveUpdateDestroyAPIView):
     serializer_class = CommentSerializer
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_class = [IsOwnerOrReadOnly]
+

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import MovieDetail, MovieList
+from .models import MovieList
 from .serializers import MovieListSerializer
 
 from rest_framework.response import Response
@@ -28,3 +28,10 @@ class MovieListGet(ListAPIView):
     # def perform_create(self, serializer):
     #     user = self.request.user
     #     serializer.save(user = user)
+
+    # def get(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance)
+    #     data = serializer.data
+    #     data['staff'] = []  # 빈 리스트로 초기화
+    #     return Response(data)
