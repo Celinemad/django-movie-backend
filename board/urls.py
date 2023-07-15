@@ -8,6 +8,7 @@ app_name = 'board'
 urlpatterns = [
     path('', MovieListGet.as_view()),
     path('<int:pk>/', MovieDetailView.as_view()),    #pk값 아닌 movie 이름으로 변경
+    path('comment/<int:movie_id>/', CommentsList.as_view()),
     path('call_list/', init_db),
     # path('', MovieListGet.as_view()),
 ]

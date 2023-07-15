@@ -1,15 +1,6 @@
 from django.db import models
 from accounts.models import CustomUser
 
-class Staff(models.Model):
-    # movie_id = models.ForeignKey(MovieList, null=True,on_delete=models.CASCADE, related_name='staffs') #related_name='movie_id'
-    name = models.TextField(default="")
-    role = models.TextField(default="")
-    image_url = models.TextField(default="")
-
-    def __str__(self):
-        return self.name
-
 class MovieList(models.Model):
     title_kor = models.CharField(max_length=100)
     title_eng = models.CharField(max_length=100)
@@ -25,13 +16,24 @@ class MovieList(models.Model):
     # staffs = models.ForeignKey(Staff, null=True, on_delete=models.CASCADE)
     # staff = models.ManyToManyField(Staff) 
     # staff = models.ForeignKey(Staff, null=True, on_delete=models.CASCADE)
-    staff = models.ManyToManyField(Staff, blank=True)
+    
 
     def __str__(self):
         return self.title_kor
+
+class Staff(models.Model):
+    movie = models.ForeignKey(MovieList, null=True,on_delete=models.CASCADE, related_name='staff') #related_name='movie_id'
+    name = models.TextField(default="")
+    role = models.TextField(default="")
+    image_url = models.TextField(default="")
+
+    def __str__(self):
+        return self.name
     
 class Comment(models.Model):
+    movie = models.ForeignKey(MovieList, null=True,on_delete=models.CASCADE, related_name='comment')
     user = models.ForeignKey(CustomUser, null=True, on_delete=models.CASCADE)
+    userName = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
 

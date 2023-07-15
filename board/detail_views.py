@@ -1,11 +1,12 @@
-from .models import Staff, MovieList
-from .serializers import MovieDetailSerializer
+from .models import Staff, MovieList, Comment
+from .serializers import MovieDetailSerializer, CommentSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView, ListAPIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny  
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .permissions import IsOwnerOrReadOnly
 import requests
 
@@ -33,7 +34,7 @@ def init_db(request):
         staffset = movie['staff']
         for staff in staffset:
             staff1 = Staff()
-            # staff1.movie_id = movie1
+            staff1.movie = movie1
             staff1.name = staff['name']
             staff1.role = staff['role']
             staff1.image_url = staff['image_url']
@@ -42,17 +43,29 @@ def init_db(request):
     return Response(status=status.HTTP_200_OK)
 
 class MovieDetailView(RetrieveAPIView):
-    queryset = MovieList.objects.all()
     serializer_class = MovieDetailSerializer
-    authentication_classes = [BasicAuthentication, SessionAuthentication]
+    #authentication_classes = [JWTAuthentication]
     permission_classes = [AllowAny]
     # lookup_url_kwarg = 'id'
 
-class CommentsList(ListAPIView):
-    queryset = Comment.objects.all()
+    def get_queryset(self):
+        movie_id = self.kwargs.get('pk')
+        return MovieList.objects.filter(id=movie_id)
+
+class CommentsList(ListCreateAPIView):
     serializer_class = CommentSerializer
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        movie_id = self.kwargs.get('movie_id')
+        return Comment.objects.filter(movie_id = movie_id)
+    
+    def perform_create(self, serializer):
+        movie_id = self.kwargs.get('movie_id')
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            serializer.save(userName=user.username, movie_id=movie_id)
 
 class CommentDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
