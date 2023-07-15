@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.account',
     #simple-jwt
     'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -215,3 +216,7 @@ SIMPLE_JWT = {
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://127.0.0.1:8000"]
+
+# import pymysql
+
+# pymysql.install_as_MySQLdb()
