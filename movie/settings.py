@@ -88,23 +88,23 @@ WSGI_APPLICATION = 'movie.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-    'default':{
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'minihackathon3',
-        'USER': 'root',
-        'PASSWORD': '010714',
-        'HOST': 'svc.sel4.cloudtype.app',
-        'PORT': '32638'
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default':{
+#         'ENGINE': 'django.db.backends.mysql', 
+#         'NAME': 'minihackathon3',
+#         'USER': 'root',
+#         'PASSWORD': '010714',
+#         'HOST': 'svc.sel4.cloudtype.app',
+#         'PORT': '32638'
+#     }
+# }
 
 
 # Password validation
